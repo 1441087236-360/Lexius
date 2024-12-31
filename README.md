@@ -1,6 +1,7 @@
 # Lexius
-![lexius-logo](https://github.com/user-attachments/assets/9f08de57-97c8-436c-820a-e3b57d9346d6)
-
+<div class="align=center">
+   ![lexius-logo](https://github.com/user-attachments/assets/9f08de57-97c8-436c-820a-e3b57d9346d6)
+</div>
 main page
 
 ![Screenshot 2024-11-30 114924](https://github.com/user-attachments/assets/f96990da-65d6-4040-8934-0d188dcc9ad6)
