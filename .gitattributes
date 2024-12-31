@@ -1,0 +1,6 @@
+*.psd filter=lfs diff=lfs merge=lfs -text
+elasticdata/TheFinalJSON/CasesFinal.json filter=lfs diff=lfs merge=lfs -text
+uncased_L-12_H-768_A-12.zip filter=lfs diff=lfs merge=lfs -text
+uncased_L-12_H-768_A-12/bert_model.ckpt.data-00000-of-00001 filter=lfs diff=lfs merge=lfs -text
+*.json filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
