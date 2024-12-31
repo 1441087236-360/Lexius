@@ -1,5 +1,5 @@
 # Lexius
-<div align=center>
+<div align="center">
 ![lexius-logo](https://github.com/user-attachments/assets/9f08de57-97c8-436c-820a-e3b57d9346d6)
 </div>
 main page
