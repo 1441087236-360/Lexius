@@ -5,14 +5,6 @@
 
 ---
 
-
-Main Page
-
-![Screenshot 2024-11-30 114924](https://github.com/user-attachments/assets/f96990da-65d6-4040-8934-0d188dcc9ad6)
-
-
----
-
 ## Table of Contents
 
 1. [Introduction](#introduction)
@@ -33,6 +25,15 @@ Main Page
 **Lexius** is an advanced chatbot designed to provide legal assistance by leveraging cutting-edge natural language processing and AI technologies. The system enables users to query legal documents, case laws, and statutory information in a conversational manner similar to interacting with ChatGPT.
 
 ---
+
+
+Main Page
+
+![Screenshot 2024-11-30 114924](https://github.com/user-attachments/assets/f96990da-65d6-4040-8934-0d188dcc9ad6)
+
+
+---
+
 
 ## Features
 
