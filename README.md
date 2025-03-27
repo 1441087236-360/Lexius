@@ -208,3 +208,4 @@ This project is licensed under the [MIT License](LICENSE).
 For any questions or support, contact:
 - **Email**: anmolshukla743@gmail.com
 - **GitHub**: [Your GitHub Profile](https://github.com/1441087236-360)
+- **Linkedin**: https://www.linkedin.com/in/anmol-shukla-b655b221b/
