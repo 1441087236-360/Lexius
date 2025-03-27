@@ -116,6 +116,6 @@ def load_bulk_data(file_path):
     )
     if response.status_code != 200:
         raise Exception(f"Failed to load data from {file_path}: {response.text}")
-*/
+
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5001)
