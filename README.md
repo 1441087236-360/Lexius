@@ -5,6 +5,7 @@
 
 ---
 
+
 ## Table of Contents
 
 1. [Introduction](#introduction)
@@ -19,6 +20,7 @@
 10. [Contact](#contact)
 
 ---
+
 
 ## Introduction
 
@@ -45,6 +47,7 @@ Main Page
 - **Secure Deployment**: Containerized environment with Docker for consistency and scalability.
 
 ---
+
 
 ## Technology Stack
 
