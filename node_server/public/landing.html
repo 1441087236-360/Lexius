@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lexius - Legal Chatbot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { margin:0; font-family:sans-serif; background:linear-gradient(90deg,#0D1B2A,#415A77); color:#fff; }
+    .navbar {
+      width: 100%;
+      background: linear-gradient(90deg, #0D1B2A, #415A77);
+      color: #E0E1DD;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 1rem 2rem 1rem 1rem;
+      box-sizing: border-box;
+      position: relative;
+      min-height: 60px;
+    }
+    .theme-toggle-btn {
+      background: none;
+      border: none;
+      color: #E0E1DD;
+      cursor: pointer;
+      position: relative;
+      margin-left: 1rem;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      border-radius: 50%;
+      transition: background 0.15s;
+      padding: 0.2rem;
+    }
+    .theme-toggle-btn:hover, .theme-toggle-btn.active {
+      background: rgba(0,0,0,0.12);
+    }
+    #profileAvatarBtn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #fff;
+      border: 1px solid #eee;
+      margin-right: 0;
+    }
+    #profileDropdown {
+      display: none;
+      position: absolute;
+      top: 3.5rem;
+      right: 2rem;
+      background: linear-gradient(90deg, #0D1B2A, #415A77);
+      color: #E0E1DD;
+      border-radius: 1rem;
+      box-shadow: 0 2px 8px #0002;
+      padding: 0.8rem 0.7rem;
+      z-index: 101;
+      min-width: 140px;
+      max-width: 200px;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.7rem;
+      box-sizing: border-box;
+      transition: max-width 0.2s, min-width 0.2s;
+      word-break: break-word;
+    }
+    #profileDropdown b {
+      display: block;
+      margin-bottom: 0.7rem;
+      word-break: break-word;
+      font-size: 1rem;
+      max-width: 100%;
+      overflow-wrap: break-word;
+    }
+    #profileDropdown button {
+      padding: 0.5rem 0.7rem;
+      border-radius: 1rem;
+      border: none;
+      background: white;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1rem;
+      margin-top: 0.3rem;
+    }
+    .profile-avatar-preview {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 0.3rem;
+    }
+    .profile-avatar-preview img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #fff;
+      object-fit: cover;
+      border: 1px solid #eee;
+    }
+    .profile-avatar-preview label {
+      cursor: pointer;
+      color: #E0E1DD;
+      font-size: 0.95rem;
+      text-decoration: underline;
+    }
+    .login-btn {
+      background: white;
+      color: black;
+      border: none;
+      border-radius: 1rem;
+      padding: 0.5rem 2rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-left: 1rem;
+      font-size: 1rem;
+    }
+    .landing-header { text-align:center; padding:2rem 0 1rem 0; }
+    .templates {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+      padding: 0 1rem; /* Add horizontal padding to prevent touching window edge */
+    }
+    .template-card { background:#fff2; border-radius:1.5rem; padding:2rem; width:260px; box-shadow:0 2px 8px #0002; }
+    .template-card h3 { margin-top:0; }
+    .landing-actions { text-align:center; margin:2rem 0; }
+    .landing-actions a { margin:0 1rem; padding:0.8rem 2rem; border-radius:2rem; background: white; color: black; text-decoration:none; font-weight:bold; transition:background 0.2s; }
+    .landing-actions a:hover { background: whitesmoke; }
+    .login-links { margin-top:2rem; text-align:center; }
+    .login-links a { color: black; margin:0 1rem; text-decoration:underline; }
+    @media (max-width: 600px) {
+      #profileDropdown {
+        min-width: 90vw;
+        max-width: 95vw;
+        padding: 0.7rem 0.3rem;
+        gap: 0.5rem;
+      }
+      .profile-avatar-preview img {
+        width: 28px;
+        height: 28px;
+      }
+      .templates {
+        gap: 1rem;
+        padding: 0 0.5rem; /* Reduce padding on small screens */
+      }
+      .template-card {
+        width: 90vw;
+        min-width: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <button id="userProfileBtn" class="theme-toggle-btn" title="User Profile" style="display:none;">
+      <img id="profileAvatarBtn" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="User Avatar">
+    </button>
+    <button id="loginBtn" class="login-btn" style="display:none;">Login</button>
+    <div id="profileDropdown">
+      <div class="profile-avatar-preview">
+        <img id="profileAvatarPreview" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="User Avatar">
+        <label for="avatarInput">Change Icon</label>
+        <input type="file" id="avatarInput" accept="image/*" style="display:none">
+      </div>
+      <b id="profileName"></b>
+      <button onclick="logout()">Log out</button>
+    </div>
+  </div>
+  <div class="landing-header">
+    <img src="lexius-logo.png" alt="Lexius Logo" style="height:48px;">
+    <h1>Welcome to Lexius</h1>
+    <p>Your AI-powered legal assistant. Choose a template to get started:</p>
+  </div>
+  <div class="templates">
+    <div class="template-card">
+      <h3>Case Law Search</h3>
+      <p>Find relevant case laws by keywords, years, or legal topics.</p>
+    </div>
+    <div class="template-card">
+      <h3>Legal Drafting</h3>
+      <p>Generate legal drafts, notices, and agreements with AI assistance.</p>
+    </div>
+    <div class="template-card">
+      <h3>Legal Q&A</h3>
+      <p>Ask legal questions and get concise, referenced answers.</p>
+    </div>
+  </div>
+  <div class="landing-actions">
+    <a href="#" id="getStartedBtn">Get Started</a>
+  </div>
+  <script>
+function logout() {
+  localStorage.removeItem('lexius_user');
+  localStorage.removeItem('lexius_user_avatar');
+  updateNavbar();
+  window.location = "landing.html";
+}
+document.getElementById('getStartedBtn').onclick = function(e) {
+  e.preventDefault();
+  if(localStorage.getItem('lexius_user')) {
+    window.location = "index.html";
+  } else {
+    window.location = "login.html";
+  }
+};
+const userProfileBtn = document.getElementById('userProfileBtn');
+const profileDropdown = document.getElementById('profileDropdown');
+const loginBtn = document.getElementById('loginBtn');
+const avatarInput = document.getElementById('avatarInput');
+const profileAvatarPreview = document.getElementById('profileAvatarPreview');
+const profileAvatarBtn = document.getElementById('profileAvatarBtn');
+const userAvatarImg = "https://ssl.gstatic.com/accounts/ui/avatar_2x.png"; // Gmail default
+
+function updateNavbar() {
+  if(localStorage.getItem('lexius_user')) {
+    userProfileBtn.style.display = '';
+    loginBtn.style.display = 'none';
+    // Load avatar if available
+    const saved = localStorage.getItem('lexius_user_avatar');
+    if (saved) {
+      profileAvatarPreview.src = saved;
+      profileAvatarBtn.src = saved;
+    } else {
+      profileAvatarPreview.src = userAvatarImg;
+      profileAvatarBtn.src = userAvatarImg;
+    }
+  } else {
+    userProfileBtn.style.display = 'none';
+    loginBtn.style.display = '';
+    profileDropdown.style.display = 'none';
+  }
+  document.getElementById('profileName').textContent = localStorage.getItem('lexius_user') || 'User';
+}
+updateNavbar();
+
+userProfileBtn.onclick = function(e) {
+  e.stopPropagation();
+  profileDropdown.style.display = profileDropdown.style.display === 'flex' ? 'none' : 'flex';
+  document.getElementById('profileName').textContent = localStorage.getItem('lexius_user') || 'User';
+};
+loginBtn.onclick = function() {
+  window.location = "login.html";
+};
+window.addEventListener('click', () => {
+  profileDropdown.style.display = 'none';
+});
+profileDropdown.onclick = e => e.stopPropagation();
+
+// Avatar upload logic
+avatarInput.addEventListener('change', function() {
+  const file = this.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    profileAvatarPreview.src = e.target.result;
+    profileAvatarBtn.src = e.target.result;
+    localStorage.setItem('lexius_user_avatar', e.target.result);
+  };
+  reader.readAsDataURL(file);
+});
+document.querySelector('.profile-avatar-preview label').onclick = function() {
+  avatarInput.click();
+};
+</script>
+</body>
+</html>

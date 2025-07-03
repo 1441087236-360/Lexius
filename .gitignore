@@ -1,0 +1,9 @@
+./node_server/node_modules/*
+./node_server/public/index2.html
+./index2.html
+./index3.html
+./node_modules/.env
+./.venv
+./app1.py
+./unness
+./flask_server/bert_model

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login / Sign Up - Lexius</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: linear-gradient(90deg,#0D1B2A,#415A77);
+      color: #fff;
+      font-family: sans-serif;
+      margin: 0;
+      background-attachment: fixed;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .login-logo {
+      height: 72px !important;
+      margin-top: 2.5rem !important;
+      margin-bottom: 1.5rem !important;
+    }
+    /* Thin scrollbar for all screens (window and media) */
+    ::-webkit-scrollbar {
+      width: 3px;
+      background: transparent;
+      transition: width 0.2s;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #415A77;
+      border-radius: 8px;
+      border: none;
+      min-height: 40px;
+      transition: background 0.2s;
+      opacity: 0.7;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    body:hover ::-webkit-scrollbar,
+    ::-webkit-scrollbar:hover {
+      width: 10px;
+    }
+
+    body:hover ::-webkit-scrollbar-thumb,
+    ::-webkit-scrollbar-thumb:hover {
+      background: #1B263B;
+      opacity: 1;
+    }
+
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #415A77 transparent;
+    }
+    .login-container {
+      max-width: 400px;
+      margin: 4rem auto;
+      background: #fff2;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 2px 8px #0002;
+    }
+    .toggle-switch {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .toggle-switch button {
+      padding: 0.8rem 0;
+      border-radius: 1rem 0 0 1rem;
+      border: none;
+      background: #d1f5e0;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      width: 48%;
+      font-size: 1rem;
+      flex: 1 1 0;
+      transition: background 0.2s;
+    }
+    .toggle-switch button:last-child {
+      border-radius: 0 1rem 1rem 0;
+      margin-left: 0;
+    }
+    .toggle-switch .active { background: #1B263B; color: #fff; }
+    .toggle-switch .divider {
+      color: black;
+      font-weight: bold;
+      font-size: 1.2rem;
+      padding: 0 0.7rem;
+      user-select: none;
+    }
+    .oauth-btn, .login-form button, .signup-form button {
+      width: 100%;
+      margin: 1rem 0 0 0;
+      padding: 0.8rem 0;
+      border-radius: 2rem;
+      border: none;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      box-sizing: border-box;
+      transition: background 0.2s;
+    }
+    .google { background: #fff; color: #222; border: 1px solid #ddd; }
+    .microsoft { background: #2F2F2F; color: #fff; }
+    .login-form input, .signup-form input {
+      padding: 0.8rem 2.5rem 0.8rem 0.8rem;
+      border-radius: 2rem;
+      border: 1px solid #ddd;
+      margin-bottom: 1rem;
+      width: 100%;
+      position: relative;
+      font-weight: bold;
+      font-size: 1rem;
+      background: #fff;
+      color: black;
+      box-sizing: border-box;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .login-form input:focus,
+    .signup-form input:focus {
+      border: 1.5px solid #1ca97a;
+    }
+    .input-wrapper {
+      position: relative;
+      width: 100%;
+    }
+    .input-wrapper input {
+      width: 100%;
+      padding-right: 3.2rem;
+      box-sizing: border-box;
+      height: 48px;
+      line-height: 48px;
+    }
+    .view-icon {
+      position: absolute;
+      top: 13%;
+      right: 0.5rem;
+      transform: translateY(-50%);
+      width: 2.2rem;
+      height: 2.2rem;
+      min-width: 36px;
+      min-height: 36px;
+      max-width: 44px;
+      max-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      outline: none;
+      z-index: 2;
+      padding: 0;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: background 0.15s;
+    }
+    .view-icon:hover {
+      background: rgba(0,0,0,0.2);
+    }
+    .login-form .view-icon svg, .signup-form .view-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: black;
+      display: block;
+    }
+    .input-wrapper .view-icon {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s;
+    }
+    .input-wrapper:hover .view-icon,
+    .input-wrapper:focus-within .view-icon {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .login-links { margin-top: 1rem; text-align: center; }
+    .login-links a {
+      background: linear-gradient(90deg, #0D1B2A, #1B263B, #1B263B, #0D1B2A);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .error-msg { color: #ff4444; text-align: center; margin-bottom: 1rem; }
+    .success-msg { color: #1B263B; text-align: center; margin-bottom: 1rem; }
+    .login-form input::placeholder,
+    .signup-form input::placeholder { font-weight: bold; color: #bbb; }
+    @media (max-width: 600px) {
+      .login-container {
+        /* Maintain aspect and scaling: use transform for perfect scaling */
+        max-width: 400px;
+        width: 96vw;
+        margin: 2rem auto;
+        padding: 2rem;
+        border-radius: 1.5rem;
+        box-shadow: 0 2px 8px #0002;
+        background: #fff2;
+        /* Scale down the whole container and its content */
+        transform: scale(0.85);
+        transform-origin: top center;
+      }
+      .login-logo {
+        /* Scale logo with container */
+        transform: scale(0.85);
+        display: inline-block;
+      }
+      /* Prevent horizontal scroll caused by scaling */
+      html, body {
+        overflow-x: hidden;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div style="text-align:center;">
+    <img src="lexius-logo.png" alt="Lexius Logo" class="login-logo">
+  </div>
+  <div class="login-container">
+    <div class="toggle-switch">
+      <button id="loginTab" class="active" onclick="showLogin()">Sign in</button>
+      <span class="divider">|</span>
+      <button id="signupTab" onclick="showSignup()">Sign up</button>
+    </div>
+    <!-- Login Form -->
+    <form id="loginForm" class="login-form" onsubmit="return devLogin(event)">
+      <div class="error-msg" id="loginError"></div>
+      <input id="login-email" type="email" placeholder="Email address" autocomplete="username" required>
+      <div class="input-wrapper">
+        <input id="login-password" type="password" placeholder="Password" autocomplete="current-password" required>
+        <button type="button" class="view-icon" tabindex="-1" onclick="togglePassword('login-password', this)">
+          <svg id="login-eye" viewBox="0 0 24 24">
+            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12zm11 3a3 3 0 100-6 3 3 0 000 6z"/>
+          </svg>
+        </button>
+      </div>
+      <button id="submit" type="submit">Sign in</button>
+      <div style="margin: 1.2rem 0 0.2rem 0; text-align:center; color:#888; font-weight:bold;">---- Or ----</div>
+      <button class="oauth-btn google" type="button" onclick="window.location='/auth/google'">
+        <svg width="22" height="22" viewBox="0 0 48 48"><g><path fill="#4285F4" d="M44.5 20H24v8.5h11.7C34.7 33.1 29.8 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c2.7 0 5.2.9 7.2 2.5l6.4-6.4C33.5 5.1 28.1 3 22 3 11.5 3 3 11.5 3 22s8.5 19 19 19c10.5 0 18.5-7.5 18.5-18 0-1.2-.1-2.1-.3-3z"/><path fill="#34A853" d="M6.3 14.7l7 5.1C15.2 17.1 19.2 14 24 14c2.7 0 5.2.9 7.2 2.5l6.4-6.4C33.5 5.1 28.1 3 22 3 11.5 3 3 11.5 3 22s8.5 19 19 19c10.5 0 18.5-7.5 18.5-18 0-1.2-.1-2.1-.3-3z"/><path fill="#FBBC05" d="M24 44c5.8 0 10.7-1.9 14.3-5.1l-6.6-5.4C29.7 35.1 27 36 24 36c-5.7 0-10.5-3.8-12.2-9.1l-7 5.4C6.7 39.9 14.1 44 24 44z"/><path fill="#EA4335" d="M44.5 20H24v8.5h11.7c-1.2 3.2-4.2 5.5-7.7 5.5-2.2 0-4.2-.7-5.7-2l-7 5.4C18.7 42.1 21.2 44 24 44c10.5 0 18.5-7.5 18.5-18 0-1.2-.1-2.1-.3-3z"/></g></svg>
+        Sign Up with Google
+      </button>
+      <button class="oauth-btn microsoft" type="button" onclick="window.location='/auth/microsoft'">
+        <svg width="22" height="22" viewBox="0 0 48 48"><g><rect fill="#F25022" x="4" y="4" width="20" height="20"/><rect fill="#7FBA00" x="24" y="4" width="20" height="20"/><rect fill="#00A4EF" x="4" y="24" width="20" height="20"/><rect fill="#FFB900" x="24" y="24" width="20" height="20"/></g></svg>
+        Sign Up with Microsoft
+      </button>
+      <div class="login-links">
+        <a onclick="showSignup()">Create an account</a>
+      </div>
+    </form>
+    <!-- Signup Form -->
+    <form id="signupForm" class="signup-form" style="display:none;" onsubmit="return signup(event)">
+      <div class="success-msg" id="signupMsg"></div>
+      <input id="signup-username" type="text" placeholder="Username" autocomplete="username" required>
+      <input id="signup-email" type="email" placeholder="Email address" autocomplete="email" required>
+      <div class="input-wrapper">
+        <input id="signup-password" type="password" placeholder="Password" autocomplete="new-password" required>
+        <button type="button" class="view-icon" tabindex="-1" onclick="togglePassword('signup-password', this)">
+          <svg id="signup-eye" viewBox="0 0 24 24">
+            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12zm11 3a3 3 0 100-6 3 3 0 000 6z"/>
+          </svg>
+        </button>
+      </div>
+      <button id="submit" type="submit">Sign up</button>
+      <div style="margin: 1.2rem 0 0.2rem 0; text-align:center; color:#888; font-weight:bold;">---- Or ----</div>
+      <button class="oauth-btn google" type="button" onclick="window.location='/auth/google'">
+        <svg width="22" height="22" viewBox="0 0 48 48"><g><path fill="#4285F4" d="M44.5 20H24v8.5h11.7C34.7 33.1 29.8 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c2.7 0 5.2.9 7.2 2.5l6.4-6.4C33.5 5.1 28.1 3 22 3 11.5 3 3 11.5 3 22s8.5 19 19 19c10.5 0 18.5-7.5 18.5-18 0-1.2-.1-2.1-.3-3z"/><path fill="#34A853" d="M6.3 14.7l7 5.1C15.2 17.1 19.2 14 24 14c2.7 0 5.2.9 7.2 2.5l6.4-6.4C33.5 5.1 28.1 3 22 3c-7.2 0-13.3 4.1-16.7 10.1z"/><path fill="#FBBC05" d="M24 44c5.8 0 10.7-1.9 14.3-5.1l-6.6-5.4C29.7 35.1 27 36 24 36c-5.7 0-10.5-3.8-12.2-9.1l-7 5.4C6.7 39.9 14.1 44 24 44z"/><path fill="#EA4335" d="M44.5 20H24v8.5h11.7c-1.2 3.2-4.2 5.5-7.7 5.5-2.2 0-4.2-.7-5.7-2l-7 5.4C18.7 42.1 21.2 44 24 44c10.5 0 18.5-7.5 18.5-18 0-1.2-.1-2.1-.3-3z"/></g></svg>
+        Sign Up with Google
+      </button>
+      <button class="oauth-btn microsoft" type="button" onclick="window.location='/auth/microsoft'">
+        <svg width="22" height="22" viewBox="0 0 48 48"><g><rect fill="#F25022" x="4" y="4" width="20" height="20"/><rect fill="#7FBA00" x="24" y="4" width="20" height="20"/><rect fill="#00A4EF" x="4" y="24" width="20" height="20"/><rect fill="#FFB900" x="24" y="24" width="20" height="20"/></g></svg>
+        Sign up with Microsoft
+      </button>
+      <div class="login-links">
+        <a onclick="showLogin()">Already have an account?</a>
+      </div>
+    </form>
+  </div>
+  <script>
+    // Redirect if already logged in
+    if(localStorage.getItem('lexius_user')) window.location = "index.html";
+
+    // Utility: Validate email format
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    // Utility: Password strength (min 8 chars, 1 number, 1 letter)
+    function isStrongPassword(password) {
+      return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/.test(password);
+    }
+
+    function showLogin() {
+      document.getElementById('loginForm').style.display = '';
+      document.getElementById('signupForm').style.display = 'none';
+      document.getElementById('loginTab').classList.add('active');
+      document.getElementById('signupTab').classList.remove('active');
+      document.getElementById('loginError').textContent = '';
+      document.getElementById('signupMsg').textContent = '';
+    }
+    function showSignup() {
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('signupForm').style.display = '';
+      document.getElementById('loginTab').classList.remove('active');
+      document.getElementById('signupTab').classList.add('active');
+      document.getElementById('loginError').textContent = '';
+      document.getElementById('signupMsg').textContent = '';
+    }
+
+    function togglePassword(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const svg = btn.querySelector('svg');
+      if (input.type === 'password') {
+        svg.innerHTML = '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12zm11 3a3 3 0 100-6 3 3 0 000 6z"/>';
+        input.type = 'text';
+      } else {
+        svg.innerHTML = '<path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"/>';
+        input.type = 'password';
+      }
+    }
+
+    function devLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim().toLowerCase();
+      const pass = document.getElementById('login-password').value;
+      let users = JSON.parse(localStorage.getItem('lexius_users') || '{}');
+      if (!isValidEmail(email)) {
+        document.getElementById('loginError').textContent = "Enter a valid email address.";
+        return false;
+      }
+      if (!pass) {
+        document.getElementById('loginError').textContent = "Password is required.";
+        return false;
+      }
+      if((email === "anmolshukla@email.com" && pass === "anmolshukla") ||
+         (users[email] && users[email].password === pass)) {
+        localStorage.setItem('lexius_user', users[email]?.username || email);
+        window.location = "index.html";
+      } else {
+        document.getElementById('loginError').textContent = "Invalid credentials.";
+      }
+      return false;
+    }
+    function signup(e) {
+      e.preventDefault();
+      const username = document.getElementById('signup-username').value.trim();
+      const email = document.getElementById('signup-email').value.trim().toLowerCase();
+      const password = document.getElementById('signup-password').value;
+      let users = JSON.parse(localStorage.getItem('lexius_users') || '{}');
+      if (!username) {
+        document.getElementById('signupMsg').textContent = "Username is required.";
+        return false;
+      }
+      if (!isValidEmail(email)) {
+        document.getElementById('signupMsg').textContent = "Enter a valid email address.";
+        return false;
+      }
+      if (!isStrongPassword(password)) {
+        document.getElementById('signupMsg').textContent = "Password must be at least 8 characters and contain a number.";
+        return false;
+      }
+      if(users[email]) {
+        document.getElementById('signupMsg').textContent = "User already exists. Please login.";
+        return false;
+      }
+      users[email] = { username, password };
+      localStorage.setItem('lexius_users', JSON.stringify(users));
+      document.getElementById('signupMsg').textContent = "Sign up successful! You can now log in.";
+      setTimeout(showLogin, 1200);
+      return false;
+    }
+    // Set default tab on load
+   document.addEventListener('DOMContentLoaded', function() {
+      showLogin();
+    });
+  </script>
+</body>
+</html>
